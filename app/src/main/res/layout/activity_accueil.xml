@@ -193,7 +193,8 @@
             android:id="@+id/BTN_Valider"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.19"
-            android:onClick="verifierInfo" />
+            android:onClick="verifierInfo"
+            android:enabled="false" />
 
         <Button
             android:layout_width="290dp"

@@ -3,9 +3,12 @@ package com.example.manu.codeacces;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,74 +17,121 @@ import org.w3c.dom.Text;
 
 public class Accueil extends AppCompatActivity {
 
+    String password = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
+        final TextView textView = (TextView) findViewById(R.id.TB_Password);
+        final EditText editText = (EditText) findViewById(R.id.TB_Username);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (editText.length() == 0)
+                    findViewById(R.id.BTN_Valider).setEnabled(false);
+                else
+                {
+                    if(textView.length() == 4)
+                        findViewById(R.id.BTN_Valider).setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(textView.length() != 4)
+                    findViewById(R.id.BTN_Valider).setEnabled(false);
+                else
+                    if(editText.length() > 0)
+                        findViewById(R.id.BTN_Valider).setEnabled(true);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
-    public void onKeyPress(View view)
-    {
+    public void onKeyPress(View view) {
         TextView passwordText = (TextView) findViewById(R.id.TB_Password);
-        if(passwordText.length() <= 10) {
+        TextView usernameText = (TextView) findViewById(R.id.TB_Username);
+        /*if (passwordText.length() == 4 && usernameText.length() < 0) {
+            Button bouton = (Button) findViewById(R.id.BTN_Valider);
+            bouton.setEnabled(true);
+        } else */if (passwordText.length() <= 3) {
             switch (view.getId()) {
                 case R.id.BTN_1:
-                    passwordText.setText(passwordText.getText() + "1");
+                    password += "1";
                     break;
                 case R.id.BTN_2:
-                    passwordText.setText(passwordText.getText() + "2");
+                    password += "2";
                     break;
                 case R.id.BTN_3:
-                    passwordText.setText(passwordText.getText() + "3");
+                    password += "3";
                     break;
                 case R.id.BTN_4:
-                    passwordText.setText(passwordText.getText() + "4");
+                    password += "4";
                     break;
                 case R.id.BTN_5:
-                    passwordText.setText(passwordText.getText() + "5");
+                    password += "5";
                     break;
                 case R.id.BTN_6:
-                    passwordText.setText(passwordText.getText() + "6");
+                    password += "6";
                     break;
                 case R.id.BTN_7:
-                    passwordText.setText(passwordText.getText() + "7");
+                    password += "7";
                     break;
                 case R.id.BTN_8:
-                    passwordText.setText(passwordText.getText() + "8");
+                    password += "8";
                     break;
                 case R.id.BTN_9:
-                    passwordText.setText(passwordText.getText() + "9");
+                    password += "9";
                     break;
                 case R.id.BTN_0:
-                    passwordText.setText(passwordText.getText() + "0");
+                    password += "0";
                     break;
             }
-        }
-        else
-            Toast.makeText(getApplicationContext(), "ERREUR: Votre mot de passe ne peut pas dépasser 10 chiffres!", Toast.LENGTH_LONG).show();
+            passwordText.setText(passwordText.getText() + "*");
+        } else
+            Toast.makeText(getApplicationContext(), "ERREUR: Votre mot de passe ne peut pas dépasser 4 chiffres!", Toast.LENGTH_LONG).show();
     }
 
-    public void effacerPassword(View v)
-    {
+    public void effacerPassword(View v) {
         TextView passwordText = (TextView) findViewById(R.id.TB_Password);
         passwordText.setText("");
+        password = "";
+/*        Button bouton = (Button) findViewById(R.id.BTN_Valider);
+        bouton.setEnabled(false);*/
     }
 
-    public void effacerUsername(View v)
-    {
+    public void effacerUsername(View v) {
         TextView usernameText = (TextView) findViewById(R.id.TB_Username);
         usernameText.setText("");
     }
 
-    public void verifierInfo(View v)
-    {
+    public void verifierInfo(View v) {
         Intent intent = new Intent(this, Affichage.class);
 
-        EditText usernameText = (EditText)findViewById(R.id.TB_Username);
+        EditText usernameText = (EditText) findViewById(R.id.TB_Username);
         String username = usernameText.getText().toString();
-
-        TextView passwordText = (TextView)findViewById(R.id.TB_Password);
-        String password = passwordText.getText().toString();
 
         intent.putExtra("username", username);
         intent.putExtra("password", password);
