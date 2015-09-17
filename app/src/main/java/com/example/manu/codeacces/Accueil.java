@@ -35,9 +35,8 @@ public class Accueil extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (editText.length() == 0)
                     findViewById(R.id.BTN_Valider).setEnabled(false);
-                else
-                {
-                    if(textView.length() == 4)
+                else {
+                    if (textView.length() == 4)
                         findViewById(R.id.BTN_Valider).setEnabled(true);
                 }
             }
@@ -55,11 +54,10 @@ public class Accueil extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(textView.length() != 4)
+                if (textView.length() != 4)
                     findViewById(R.id.BTN_Valider).setEnabled(false);
-                else
-                    if(editText.length() > 0)
-                        findViewById(R.id.BTN_Valider).setEnabled(true);
+                else if (editText.length() > 0)
+                    findViewById(R.id.BTN_Valider).setEnabled(true);
 
             }
 
@@ -76,7 +74,8 @@ public class Accueil extends AppCompatActivity {
         /*if (passwordText.length() == 4 && usernameText.length() < 0) {
             Button bouton = (Button) findViewById(R.id.BTN_Valider);
             bouton.setEnabled(true);
-        } else */if (passwordText.length() <= 3) {
+        } else */
+        if (passwordText.length() <= 3) {
             switch (view.getId()) {
                 case R.id.BTN_1:
                     password += "1";
@@ -116,10 +115,10 @@ public class Accueil extends AppCompatActivity {
 
     public void effacerPassword(View v) {
         TextView passwordText = (TextView) findViewById(R.id.TB_Password);
-        passwordText.setText("");
-        password = "";
-/*        Button bouton = (Button) findViewById(R.id.BTN_Valider);
-        bouton.setEnabled(false);*/
+        if (passwordText.length() > 0) {
+            passwordText.setText(passwordText.getText().toString().substring(0, passwordText.length() - 1));
+            password = password.substring(0, password.length() - 1);
+        }
     }
 
     public void effacerUsername(View v) {
